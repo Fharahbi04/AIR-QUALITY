@@ -6,16 +6,9 @@ df_changping = pd.read_csv("Dashboard/df_chang.csv")
 df_guanyuan = pd.read_csv("Dashboard/df_guan.csv")
 pollutants = df_changping.columns[5:11]
 pollutants1 = df_guanyuan.columns[5:11]
-# Asumsi dataframe memiliki kolom 'tahun'
 min_year = min(df_changping['year'].min(), df_guanyuan['year'].min())
 max_year = max(df_changping['year'].max(), df_guanyuan['year'].max())
 
-# Slider untuk memilih rentang tahun
-start_year, end_year = st.slider("Pilih Rentang Tahun", min_value=min_year, max_value=max_year, value=(min_year, max_year))
-
-# Filter data berdasarkan rentang tahun
-df_changping_filtered = df_changping[(df_changping['year'] >= start_year) & (df_changping['year'] <= end_year)]
-df_guanyuan_filtered = df_guanyuan[(df_guanyuan['year'] >= start_year) & (df_guanyuan['year'] <= end_year)]
 
 with st.sidebar:
         st.image("Dashboard/air.png",width=300)
@@ -31,6 +24,13 @@ with st.sidebar:
         ) 
 
 if option == "Pilihan":
+        # Slider untuk memilih rentang tahun
+    start_year, end_year = st.slider("Pilih Rentang Tahun", min_value=min_year, max_value=max_year, value=(min_year, max_year))
+
+    # Filter data berdasarkan rentang tahun
+    df_changping_filtered = df_changping[(df_changping['year'] >= start_year) & (df_changping['year'] <= end_year)]
+    df_guanyuan_filtered = df_guanyuan[(df_guanyuan['year'] >= start_year) & (df_guanyuan['year'] <= end_year)]
+
     sns.set_style("whitegrid")
     
     # Menghitung rata-rata polutan per bulan di kedua stasiun
